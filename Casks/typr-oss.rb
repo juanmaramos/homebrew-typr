@@ -1,4 +1,4 @@
-cask "typr" do
+cask "typr-oss" do
   arch arm: "aarch64", intel: "x64"
 
   version "0.1.12"
@@ -15,7 +15,7 @@ cask "typr" do
     strategy :github_latest
   end
 
-  conflicts_with cask: "typr-oss"
+  conflicts_with cask: "typr"
 
   app "Typr OSS.app"
 
