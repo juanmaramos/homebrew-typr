@@ -1,0 +1,41 @@
+name: Cask validation
+
+on:
+  pull_request:
+    paths:
+      - "Casks/**"
+      - ".github/workflows/cask-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  casks:
+    runs-on: macos-14
+    timeout-minutes: 30
+    steps:
+      - name: Set up Homebrew and check out this tap
+        uses: Homebrew/actions/setup-homebrew@848c272c7bfe984a197bd4d16383f4c106ec61e6 # 2026.09.21.1
+        with:
+          core: false
+          cask: false
+          stable: true
+
+      - name: Audit both casks
+        run: |
+          brew audit --cask --strict juanmaramos/typr/typr-oss
+          brew audit --cask --strict juanmaramos/typr/typr
+
+      - name: Install canonical cask into a temporary app directory
+        env:
+          APPDIR: ${{ runner.temp }}/typr-oss-apps
+        run: brew install --cask --appdir="$APPDIR" juanmaramos/typr/typr-oss
+
+      - name: Verify app signature and Gatekeeper assessment
+        env:
+          APPDIR: ${{ runner.temp }}/typr-oss-apps
+        run: |
+          APP="$APPDIR/Typr OSS.app"
+          test -d "$APP"
+          codesign --verify --deep --strict --verbose=2 "$APP"
+          spctl --assess --type execute --verbose=4 "$APP"
