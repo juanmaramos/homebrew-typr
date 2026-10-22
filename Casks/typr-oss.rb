@@ -1,9 +1,9 @@
 cask "typr-oss" do
   arch arm: "aarch64", intel: "x64"
 
-  version "0.1.15"
-  sha256 arm:   "80c82321feca619e5f28f30cefc651c2c5d2ce219a8fd074db2cb1b4134fdbb0",
-         intel: "4de79fc50e8288230e55150a360d7062fadd559b63143e79f63c248d6dda5701"
+  version "0.1.16"
+  sha256 arm:   "dcf07eccabd15e0f3688b58254135c95469f0410d9be87084b75b1a5b6ca0b8e",
+         intel: "ac9c8f170c121d564b53494df12c885219dede61c152fcb824d96a6966cf10cf"
 
   url "https://github.com/juanmaramos/typr-oss/releases/download/v#{version}/Typr.OSS_#{version}_#{arch}.dmg"
   name "Typr OSS"
